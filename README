@@ -4,7 +4,7 @@
 
 About DomotiCharts:
 -------------
-DomotiCharts is a wrapper around googles HighCharts to generate nice charts from DomotiGa devices.
+DomotiCharts is a wrapper around HighCharts to generate nice charts from DomotiGa devices.
 The graphs are based on the logged status changes.
 
 
