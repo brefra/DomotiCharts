@@ -29,20 +29,20 @@ if (!$end) $end = mktime() * 1000;
 // Select correct 
 // two days range loads minute data
 if ($range < 2 * 24 * 3600 * 1000) {
-        $table = 'stockquotes';
+        $table = 'minute';
         
 // one month range loads hourly data
 } elseif ($range < 31 * 24 * 3600 * 1000) {
-        $table = 'stockquotes_hour';
+        $table = 'hour';
         
 // one year range loads daily data
 } elseif ($range < 15 * 31 * 24 * 3600 * 1000) {
-        $table = 'stockquotes_day';
+        $table = 'day';
 
 
 // greater range loads monthly data
 } else {
-        $table = 'stockquotes_month';
+        $table = 'month';
 } 
 
 
@@ -81,14 +81,26 @@ if ($_GET["device_id"] AND $_GET["valuenum"]){
 $skipfirst = False;
 if ($_GET["diff"]){
 	$ParseData = "LogValues_diff";
-  
-  $query = "SELECT unix_timestamp(CONCAT(date(lastchanged), ' ', maketime(HOUR(lastchanged),0,0))) as lastchanged, SUM(calc_value) as 'value' from ( ";  
+  $query = "SELECT unix_timestamp(CONCAT(date(lastchanged), ' ', maketime(HOUR(lastchanged),0,0))) * 1000 as lastchanged, SUM(calc_value) as 'value' from ( ";  
   $query .= "SELECT lastchanged, value, round(value-@tempvalue, 3) as calc_value, @tempvalue:=value ";
   $query .= "FROM device_values_log, (select @tempvalue:=0) as dummytable ";
-  $query .= "where device_id='$device_id' and valuenum='$valuenum' ";
+  $query .= "where device_id='$device_id' and valuenum='$valuenum' and lastchanged between '$startTime' and '$endTime'";
   $query .= "order by lastchanged ";
   $query .= ") AS TempTable ";
-  $query .= "GROUP BY EXTRACT(DAY FROM lastchanged), EXTRACT(HOUR FROM lastchanged)";
+  switch ($table) {
+    case 'minute':
+      $query .= "GROUP BY EXTRACT(DAY FROM lastchanged), EXTRACT(HOUR FROM lastchanged), EXTRACT(MINUTE FROM lastchanged)";
+      break;
+    case 'hour':
+      $query .= "GROUP BY EXTRACT(DAY FROM lastchanged), EXTRACT(HOUR FROM lastchanged)";
+      break;
+    case 'day':
+      $query .= "GROUP BY EXTRACT(DAY FROM lastchanged)";
+      break;
+    case 'month':
+      $query .= "GROUP BY EXTRACT(MONTH FROM lastchanged)";
+      break;
+  }
   $query .= "order by lastchanged";
   $skipfirst = True;
 }
@@ -108,7 +120,8 @@ while ($row = mysql_fetch_assoc($result)){
 // print it
 header('Content-Type: text/javascript');
 
-echo "/* console.log(' start = $start, end = $end, startTime = $startTime, endTime = $endTime '); */";
+//echo "/* console.log(' start = $start, end = $end, startTime = $startTime, endTime = $endTime '); */\n";
+//echo "/* console.log(' query = $query'); */\n";
 echo $callback ."([\n" . join(",\n", $rows) ."\n]);";
 
 ?>

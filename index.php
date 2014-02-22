@@ -145,10 +145,12 @@ $(function() {
       
 			xAxis : {
         ordinal: false,
+        type: 'datetime',
 				events : {
 					afterSetExtremes : afterSetExtremes
-				},
-				minRange: 3600 * 1000 // one hour
+				}
+//				minRange: 3600 * 1000 // one hour
+        
 			},
 
 			yAxis: {
