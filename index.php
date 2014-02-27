@@ -48,22 +48,22 @@ if ($_GET["device_id"] AND $_GET["valuenum"]){
       $valuerrddsname = '--RDD label missing--';
     }
     if ($row['valuerrdtype'] == 'COUNTER'){
-      $Diff = '&diff=true';
+      $Counter = '&counter=true';
     }else{
-      $Diff = '';
+      $Counter = '';
     }
     if (($device_id == $row['id']) AND ($valuenum == $row['valuenum'])){
-      echo '<option value="index.php?device_id='.$row['id'].'&valuenum='.$row['valuenum'].$Diff.'" selected>'.$row['name'].' - '.$valuerrddsname.'</option>';
+      echo '<option value="index.php?device_id='.$row['id'].'&valuenum='.$row['valuenum'].$Counter.'" selected>'.$row['name'].' - '.$valuerrddsname.'</option>';
       $Graph_Title = $row['name'];
       $Graph_Y_Label = $valuerrddsname;
       $Graph_Y_Units = $row['units'];
-      if ($Diff ==''){
+      if ($Counter ==''){
         $Graph_Type = 'spline';
       }else{
         $Graph_Type = 'column';
       }
     }else{
-      echo '<option value="index.php?device_id='.$row['id'].'&valuenum='.$row['valuenum'].$Diff.'">'.$row['name'].' - '.$valuerrddsname.'</option>';
+      echo '<option value="index.php?device_id='.$row['id'].'&valuenum='.$row['valuenum'].$Counter.'">'.$row['name'].' - '.$valuerrddsname.'</option>';
     }
 	}
 ?>
@@ -78,7 +78,7 @@ if ($_GET["device_id"] AND $_GET["valuenum"]){
 	echo "</script>"."\n";
 ?>
 
-<div id="chart" style="width: 100%; height: 400px; margin: 0 auto"></div>
+<div id="chart" style="width: 100%; height: 70%; margin: 0 auto"></div>
 
 <script type="text/javascript">
 

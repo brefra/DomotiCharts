@@ -82,21 +82,12 @@ if ($range < 3 * 24 * 3600 * 1000) {
         $TableDetail = 'day';
 }
 
-
-$ParseData = '';
-
-if ($_GET['devicelist']){
-	$query = 'SELECT id, name FROM devices WHERE enabled IS TRUE AND hide IS FALSE ORDER BY name';
-	$ParseData = 'DeviceList';
-}
-
 if ($_GET["device_id"] AND $_GET["valuenum"]){
 	$query = "SELECT unix_timestamp(lastchanged) * 1000 as lastchanged, value FROM device_values_log WHERE device_id='$device_id' and valuenum='$valuenum' and lastchanged between '$startTime' and '$endTime' order by lastchanged";
-	$ParseData = "LogValues";
 }
 $skipfirst = False;
-if ($_GET["diff"]){
-	$ParseData = "LogValues_diff";
+
+if ($_GET["counter"]){
   switch ($TableDetail) {
     case 'minute':
       $query = "SELECT unix_timestamp(CONCAT(date(lastchanged), ' ', maketime(HOUR(lastchanged),MINUTE(lastchanged),0))) * 1000 as lastchanged, SUM(calc_value) as 'value' from ( ";
@@ -139,7 +130,7 @@ $result = mysql_query($query) or die(mysql_error());
 $rows = array();
 while ($row = mysql_fetch_assoc($result)){
   extract($row);
-  if ($_GET["diff"] AND $skipfirst){
+  if ($skipfirst){
     $skipfirst = False;
   }else{
     $rows[] = "[$lastchanged,$value]";

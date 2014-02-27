@@ -2,9 +2,10 @@
   DomotiCharts
 ================================================================================
 
-About DomotiCharts:
--------------
-DomotiCharts is a wrapper around HighCharts to generate nice charts from DomotiGa devices.
+What is DomotiCharts:
+---------------------
+DomotiCharts is a wrapper around HighCharts to generate nice charts of 
+collected values of DomotiGa devices.
 The graphs are based on the logged status changes.
 
 
@@ -18,6 +19,6 @@ To be able to view a chart the following parts needs to
 How to install 'DomotiCharts':
 -------------------
 Unpack the directory to /var/www, or put it's contents in the webroot.
-Change the connection details to connect to the DomotiGa database in the 'config.php'
+Change the connection details to connect to the DomotiGa database in the 'mysql.php'
 
-open in the browser the index.php page. When everything is ok, it should show the list of graphs to view
+Open in the browser the index.php page. When everything is ok, it should show the list of graphs to view
