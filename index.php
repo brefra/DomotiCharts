@@ -4,7 +4,7 @@
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-<title>DomotiGa charts</title>
+<title>DomotiCharts</title>
 
 <?php
 include 'config.php';
@@ -35,9 +35,7 @@ if ($_GET["device_id"] AND $_GET["valuenum"]){
 
 </head>
 <body>
-<form action="">
-
-<select name="Devices" onchange="ChangeChart(this.value)">
+<form action=""> Select chart to view: <select name="Devices" onchange="ChangeChart(this.value)">
 <?php
 
   mysql_query ('SET NAMES utf8');
@@ -191,7 +189,7 @@ function afterSetExtremes(e) {
 		chart = $('#chart').highcharts();
 		
     chart.showLoading('Loading data from server...');
-    $.getJSON(DataURL + 'start='+ Math.round(e.min) + '&end='+ Math.round(e.max) +'&callback=?', function(data) {
+    $.getJSON(DataURL + '&start='+ Math.round(e.min) + '&end='+ Math.round(e.max) +'&callback=?', function(data) {
 		
 		chart.series[0].setData(data);
 		chart.hideLoading();
