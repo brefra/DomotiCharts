@@ -21,8 +21,8 @@ if ($_GET["device_id"] AND $_GET["valuenum"]){
 	$device_id = $_GET["device_id"];
 	$valuenum = $_GET["valuenum"];
 	echo '<script type="text/javascript">'."\n";
-  if ($_GET["diff"]=='true'){
-    echo 'var DataURL = "mysql.php?device_id='.$device_id.'&valuenum='.$valuenum.'&diff=true";'."\n";
+  if ($_GET["counter"]=='true'){
+    echo 'var DataURL = "mysql.php?device_id='.$device_id.'&valuenum='.$valuenum.'&counter=true";'."\n";
   }else{
     echo 'var DataURL = "mysql.php?device_id='.$device_id.'&valuenum='.$valuenum.'";'."\n";
   }

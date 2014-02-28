@@ -82,9 +82,7 @@ if ($range < 3 * 24 * 3600 * 1000) {
         $TableDetail = 'day';
 }
 
-if ($_GET["device_id"] AND $_GET["valuenum"]){
-	$query = "SELECT unix_timestamp(lastchanged) * 1000 as lastchanged, value FROM device_values_log WHERE device_id='$device_id' and valuenum='$valuenum' and lastchanged between '$startTime' and '$endTime' order by lastchanged";
-}
+
 $skipfirst = False;
 
 if ($_GET["counter"]){
@@ -123,8 +121,9 @@ if ($_GET["counter"]){
   }
   $query .= "order by lastchanged";
   $skipfirst = True;
+}else{
+  $query = "SELECT unix_timestamp(lastchanged) * 1000 as lastchanged, value FROM device_values_log WHERE device_id='$device_id' and valuenum='$valuenum' and lastchanged between '$startTime' and '$endTime' order by lastchanged";
 }
-
 $result = mysql_query($query) or die(mysql_error());
 
 $rows = array();
