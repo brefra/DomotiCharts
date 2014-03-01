@@ -1,6 +1,6 @@
 <?php
 $host     = "localhost";
-$database = "DomotiGa";
+$database = "domotiga";
 $user     = "domouser";
 $password = "kung-fu";
 ?>
