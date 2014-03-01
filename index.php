@@ -95,7 +95,7 @@ $(function() {
         events: {
           load: function(chart) {
             this.setTitle(null, {
-              text: 'Built chart at '+ (new Date() - start) +'ms'
+              text: 'Built chart in '+ (new Date() - start) +'ms'
             });
           }
         },
