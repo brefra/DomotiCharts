@@ -40,7 +40,7 @@ if ($_GET["device_id"] AND $_GET["valuenum"]){
 
   mysql_query ('SET NAMES utf8');
 
-	$query = 'SELECT devices.id, devices.name, device_values.value, device_values.valuerrddsname, device_values.log, device_values.valuenum, device_values.units, device_values.valuerrdtype FROM devices INNER JOIN device_values ON devices.id = device_values.deviceid WHERE devices.hide IS FALSE AND devices.enabled IS TRUE AND device_values.log IS TRUE ORDER BY devices.name ASC';
+	$query = 'SELECT devices.id, devices.name, device_values.value, device_values.valuerrddsname, device_values.log, device_values.valuenum, device_values.units, device_values.valuerrdtype FROM devices INNER JOIN device_values ON devices.id = device_values.device_id WHERE devices.hide IS FALSE AND devices.enabled IS TRUE AND device_values.log IS TRUE ORDER BY devices.name ASC';
  	$result = mysql_query($query);
 	while($row = mysql_fetch_array($result)) {
     $valuerrddsname = $row['valuerrddsname'];
