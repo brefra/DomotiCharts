@@ -61,7 +61,7 @@ if ($start<$firstrecord){
 
 // set some utility variables
 $range = $end - $start;
-$startTime = strftime('%Y-%m-%d %H:%M:%S', $start / 1000);
+$startTime = gmstrftime('%Y-%m-%d %H:%M:%S', $start / 1000);
 $endTime = strftime('%Y-%m-%d %H:%M:%S', $end / 1000);
 
 // Select correct range
