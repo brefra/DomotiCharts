@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head> 
@@ -15,13 +15,11 @@ if (!$con) {
 }
 mysql_select_db($database, $con);
 
-
-if ($_GET["device_id"] AND $_GET["valuenum"]){
-	$ParseData = "DeviceValues";
+if (isset($_GET["device_id"]) && isset($_GET["valuenum"])){
 	$device_id = $_GET["device_id"];
 	$valuenum = $_GET["valuenum"];
 	echo '<script type="text/javascript">'."\n";
-  if ($_GET["counter"]=='true'){
+  if (isset($_GET["counter"])=='true'){
     echo 'var DataURL = "mysql.php?device_id='.$device_id.'&valuenum='.$valuenum.'&counter=true";'."\n";
   }else{
     echo 'var DataURL = "mysql.php?device_id='.$device_id.'&valuenum='.$valuenum.'";'."\n";
