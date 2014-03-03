@@ -19,10 +19,10 @@ if (isset($_GET["device_id"]) && isset($_GET["valuenum"])){
 	$device_id = $_GET["device_id"];
 	$valuenum = $_GET["valuenum"];
 	echo '<script type="text/javascript">'."\n";
-  if (isset($_GET["counter"])=='true'){
-    echo 'var DataURL = "mysql.php?device_id='.$device_id.'&valuenum='.$valuenum.'&counter=true";'."\n";
+  if (isset($_GET["counter"]) && $_GET["counter"]=='true'){
+    echo 'var DataURL = "mysql.php?device_id='.mysql_real_escape_string($device_id).'&valuenum='.mysql_real_escape_string($valuenum).'&counter=true";'."\n";
   }else{
-    echo 'var DataURL = "mysql.php?device_id='.$device_id.'&valuenum='.$valuenum.'";'."\n";
+    echo 'var DataURL = "mysql.php?device_id='.mysql_real_escape_string($device_id).'&valuenum='.mysql_real_escape_string($valuenum).'";'."\n";
   }
  	echo "</script>"."\n";
 }
