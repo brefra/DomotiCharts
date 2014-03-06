@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head> 
@@ -15,16 +15,14 @@ if (!$con) {
 }
 mysql_select_db($database, $con);
 
-
-if ($_GET["device_id"] AND $_GET["valuenum"]){
-	$ParseData = "DeviceValues";
+if (isset($_GET["device_id"]) && isset($_GET["valuenum"])){
 	$device_id = $_GET["device_id"];
 	$valuenum = $_GET["valuenum"];
 	echo '<script type="text/javascript">'."\n";
-  if ($_GET["counter"]=='true'){
-    echo 'var DataURL = "mysql.php?device_id='.$device_id.'&valuenum='.$valuenum.'&counter=true";'."\n";
+  if (isset($_GET["counter"]) && $_GET["counter"]=='true'){
+    echo 'var DataURL = "mysql.php?device_id='.mysql_real_escape_string($device_id).'&valuenum='.mysql_real_escape_string($valuenum).'&counter=true";'."\n";
   }else{
-    echo 'var DataURL = "mysql.php?device_id='.$device_id.'&valuenum='.$valuenum.'";'."\n";
+    echo 'var DataURL = "mysql.php?device_id='.mysql_real_escape_string($device_id).'&valuenum='.mysql_real_escape_string($valuenum).'";'."\n";
   }
  	echo "</script>"."\n";
 }
@@ -40,7 +38,7 @@ if ($_GET["device_id"] AND $_GET["valuenum"]){
 
   mysql_query ('SET NAMES utf8');
 
-	$query = 'SELECT devices.id, devices.name, device_values.value, device_values.valuerrddsname, device_values.log, device_values.valuenum, device_values.units, device_values.valuerrdtype FROM devices INNER JOIN device_values ON devices.id = device_values.deviceid WHERE devices.hide IS FALSE AND devices.enabled IS TRUE AND device_values.log IS TRUE ORDER BY devices.name ASC';
+	$query = 'SELECT devices.id, devices.name, device_values.value, device_values.valuerrddsname, device_values.log, device_values.valuenum, device_values.units, device_values.valuerrdtype FROM devices INNER JOIN device_values ON devices.id = device_values.device_id WHERE devices.hide IS FALSE AND devices.enabled IS TRUE AND device_values.log IS TRUE ORDER BY devices.name ASC';
  	$result = mysql_query($query);
 	while($row = mysql_fetch_array($result)) {
     $valuerrddsname = $row['valuerrddsname'];
@@ -95,7 +93,7 @@ $(function() {
         events: {
           load: function(chart) {
             this.setTitle(null, {
-              text: 'Built chart at '+ (new Date() - start) +'ms'
+              text: 'Built chart in '+ (new Date() - start) +'ms'
             });
           }
         },

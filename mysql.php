@@ -8,31 +8,43 @@
 include 'config.php';
 
 // get the parameters
-
-$callback = $_GET['callback'];
-if (!preg_match('/^[a-zA-Z0-9_]+$/', $callback)) {
-  die('Invalid callback name');
+if (isset($_GET['callback'])) {
+  $callback = $_GET['callback'];
+  if (!preg_match('/^[a-zA-Z0-9_]+$/', $callback)) {
+    die('Invalid callback name');
+  }
 }
 
-$start = $_GET['start'];
-if ($start && !preg_match('/^[0-9]+$/', $start)) {
-  die("Invalid start parameter: $start");
+if (isset($_GET['start'])) {
+  $start = $_GET['start'];
+  if ($start && !preg_match('/^[0-9]+$/', $start)) {
+    die("Invalid start parameter: $start");
+  }
+} else {
+$start = 0;
 }
 
-$end = $_GET['end'];
-if ($end && !preg_match('/^[0-9]+$/', $end)) {
-  die("Invalid end parameter: $end");
-}
-if (!$end) $end = mktime() * 1000;
-
-$device_id = $_GET["device_id"];
-if ($device_id && !preg_match('/^[0-9]+$/', $end)) {
-  die("Invalid device_id parameter: $device_id");
+if (isset($_GET['end'])) {
+  $end = $_GET['end'];
+  if ($end && !preg_match('/^[0-9]+$/', $end)) {
+    die("Invalid end parameter: $end");
+  }
+} else {
+  $end = time() * 1000;
 }
 
-$valuenum = $_GET["valuenum"];
-if ($valuenum && !preg_match('/^[0-9]+$/', $end)) {
-  die("Invalid valuenum parameter: $valuenum");
+if (isset($_GET['device_id'])) {
+  $device_id = $_GET["device_id"];
+  if ($device_id && !preg_match('/^[0-9]+$/', $end)) {
+    die("Invalid device_id parameter: $device_id");
+  }
+}
+
+if (isset($_GET['valuenum'])) {
+  $valuenum = $_GET["valuenum"];
+  if ($valuenum && !preg_match('/^[0-9]+$/', $end)) {
+    die("Invalid valuenum parameter: $valuenum");
+  }
 }
 
 // connect to MySQL
@@ -55,9 +67,10 @@ while ($firstrow = mysql_fetch_assoc($result)){
   extract($firstrow);
 }
 
-if ($start<$firstrecord){
+if ($start<$firstrecord) {
   $start = $firstrecord;
 }
+
 
 // set some utility variables
 $range = $end - $start;
@@ -85,7 +98,7 @@ if ($range < 3 * 24 * 3600 * 1000) {
 
 $skipfirst = False;
 
-if ($_GET["counter"]){
+if (isset($_GET["counter"])){
   switch ($TableDetail) {
     case 'minute':
       $query = "SELECT unix_timestamp(CONCAT(date(lastchanged), ' ', maketime(HOUR(lastchanged),MINUTE(lastchanged),0))) * 1000 as lastchanged, SUM(calc_value) as 'value' from ( ";
