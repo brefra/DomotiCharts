@@ -16,6 +16,7 @@ To be able to view a chart you have to enable logging of the device value to the
 - Enter  a "datasource name" at the graphs tab
 - Select the correct value type "gauge" or "counter". Other types are not (yet) supported.
 - Enable the "Log status changes to db" option at the option tab.
+- Last but not least, be sure to run DomotiGa version 1.0.015 or later.
 
 
 How to install 'DomotiCharts':
